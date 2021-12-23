@@ -1,0 +1,27 @@
+/dts-v1/;
+/plugin/;
+
+/ {
+	fragment@0 {
+		target = <&sound>;
+
+		__overlay__ {
+			dai-link-4 {
+				sound-dai = <&spdifout &spdifin>;
+
+				codec-0 {
+					sound-dai = <&spdif_dit>;
+				};
+			};
+		};
+	};
+
+	fragment@1 {
+		target = <&spdifin>;
+
+		__overlay__ {
+			pinctrl-names = "default";
+			status = "okay";
+		};
+	};
+};
