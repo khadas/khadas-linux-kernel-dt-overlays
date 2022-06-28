@@ -2,7 +2,8 @@
 
 https://github.com/khadas/khadas-linux-kernel-dt-overlays
 
-+ mainline
++ mainline kernel
++ vendor kernel
 
 ## related projects
 
