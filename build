@@ -1,0 +1,37 @@
+#!/bin/sh
+
+## hyphop ##
+
+#= build dt overlays
+
+FAIL(){
+    echo "[e] $@">&2
+    exit 1
+}
+LOG(){
+    echo "[i] $@"
+}
+CMD(){
+    echo "[#] $@">&2
+    "$@"
+}
+which dtc >/dev/null 2>&1 || FAIL "dtc not found"
+
+D=$(dirname "$0")
+
+LOG "build dt overlsys"
+
+OVL=overlays
+BIN=$D/bin
+mkdir -p $BIN
+
+find $D/$OVL -name *.dts | while read r ; do
+    LOG "+ $r"
+    dtbo=${r#*$OVL/}
+    dtbo=${dtbo%.*}.dtbo
+    dts=${dtbo%.*}.dts
+    dtbd="$BIN/${dtbo%/*}"
+    mkdir -p "$dtbd"
+    #CMD cp "$r" "$BIN/$dts"
+    CMD dtc -@ "$r" -o "$BIN/$dtbo"
+done
