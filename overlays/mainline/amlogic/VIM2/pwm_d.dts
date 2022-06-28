@@ -1,0 +1,16 @@
+/dts-v1/;
+/plugin/;
+
+/ {
+	fragment@0 {
+		target = <&pwm_cd>;
+
+		__overlay__ {
+			compatible = "amlogic,meson-gx-pwm", "amlogic,meson-gxbb-pwm";
+			reg = <0x0 0x08650 0x0 0x10>;
+			#pwm-cells = <3>;
+			pinctrl-0 = <&pwm_d_pins>;
+			status = "okay";
+		};
+	};
+};
