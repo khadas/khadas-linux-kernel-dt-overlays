@@ -31,14 +31,14 @@ if [ "$1" = "clean" ]; then
 fi
 
 find $D/$OVL -name *.dts | while read r ; do
-    LOG "+ $r"
+#    LOG "+ $r"
     dtbo=${r#*$OVL/}
     dtbo=${dtbo%.*}.dtbo
     dts=${dtbo%.*}.dts
     dtbd="$BIN/${dtbo%/*}"
     mkdir -p "$dtbd"
     #CMD cp "$r" "$BIN/$dts"
-    CMD dtc -@ "$r" -o "$BIN/$dtbo"
+    dtc -@ "$r" -o "$BIN/$dtbo"
 done
 
 if [ "$1" = "debian" ]; then
