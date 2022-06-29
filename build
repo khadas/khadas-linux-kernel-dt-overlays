@@ -25,6 +25,11 @@ OVL=overlays
 BIN=$D/bin
 mkdir -p $BIN
 
+if [ "$1" = "clean" ]; then
+	rm -rf $BIN *.deb
+	exit
+fi
+
 find $D/$OVL -name *.dts | while read r ; do
     LOG "+ $r"
     dtbo=${r#*$OVL/}
@@ -35,3 +40,32 @@ find $D/$OVL -name *.dts | while read r ; do
     #CMD cp "$r" "$BIN/$dts"
     CMD dtc -@ "$r" -o "$BIN/$dtbo"
 done
+
+if [ "$1" = "debian" ]; then
+	debian_package_path=$D/.tmp/
+	mkdir -p $debian_package_path
+	for control in `ls $D/debian/control.*`
+	do
+		debian_package=`cat $control | grep "Package: " | awk '{print $2}'`
+		ver=`cat $control | grep "Version: " | awk '{print $2}'`
+		debian_package=${debian_package}_${ver}_arm64
+		board=`echo $debian_package | awk -F "-" '{print $2}'`
+		linux=`echo $debian_package | awk -F "-" '{print $4}'`
+		rm -rf $debian_package_path/$debian_package
+		mkdir -p $debian_package_path/$debian_package/DEBIAN
+		cp -r $control $debian_package_path/$debian_package/DEBIAN/control
+		dtb_path=$debian_package_path/$debian_package/boot/dtb
+		if [ "$board" = "vim4" ]; then
+			dtb_path=$dtb_path/amlogic
+		fi
+		overlay_path=$dtb_path/k${board}.dtb.overlays
+		mkdir -p $overlay_path
+		cp $BIN/$board/$linux/*.dtbo $overlay_path
+		echo "fdt_overlays=" > $dtb_path/k${board}.dtb.overlay.env
+		fakeroot dpkg -b $debian_package_path/$debian_package
+		mv $debian_package_path/${debian_package}.deb .
+		rm -rf $debian_package_path/${debian_package}
+	done
+
+	rm -rf $debian_package_path
+fi
