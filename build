@@ -57,11 +57,20 @@ if [ "$1" = "debian" ]; then
 		dtb_path=$debian_package_path/$debian_package/boot/dtb
 		if [ "$board" = "vim4" ]; then
 			dtb_path=$dtb_path/amlogic
+			vendor=amlogic
 		fi
 		overlay_path=$dtb_path/k${board}.dtb.overlays
 		mkdir -p $overlay_path
 		cp $BIN/$board/$linux/*.dtbo $overlay_path
-		echo "fdt_overlays=" > $dtb_path/k${board}.dtb.overlay.env
+		cat <<-EOF > $debian_package_path/$debian_package/DEBIAN/postinst
+		#!/bin/bash
+
+		[ ! -f /boot/dtb/$vendor/k${board}.dtb.overlay.env ] && echo "fdt_overlays=" > /boot/dtb/$vendor/k${board}.dtb.overlay.env
+
+		exit 0
+		EOF
+		chmod 755 $debian_package_path/$debian_package/DEBIAN/postinst
+
 		fakeroot dpkg -b $debian_package_path/$debian_package
 		mv $debian_package_path/${debian_package}.deb .
 		rm -rf $debian_package_path/${debian_package}
