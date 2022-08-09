@@ -4,4 +4,4 @@
 !README.md
 .unused/
 /work/
-
+*.deb
