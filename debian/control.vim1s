@@ -1,0 +1,9 @@
+Package: khadas-vim1s-linux-5.4-dt-overlays
+Version: 1.0~20220822
+Architecture: arm64
+Maintainer: Khadas <hello@khadas.com>
+Installed-Size: 130
+Section: kernel
+Priority: optional
+Homepage: http://www.kernel.org/
+Description: Linux DTB overlays.
