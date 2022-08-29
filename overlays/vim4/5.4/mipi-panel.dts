@@ -33,4 +33,12 @@
 			fbdev_sizes = <1080 1920 1080 3840 32>;
 		};
 	};
+
+	fragment@4 {
+		target = <&ft5336>;
+
+		__overlay__ {
+			status = "okay";
+		};
+	};
 };
