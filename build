@@ -55,7 +55,7 @@ if [ "$1" = "debian" ]; then
 		mkdir -p $debian_package_path/$debian_package/DEBIAN
 		cp -r $control $debian_package_path/$debian_package/DEBIAN/control
 		dtb_path=$debian_package_path/$debian_package/boot/dtb
-		if [ "$board" = "vim4" ]; then
+		if [ "$board" = "vim4" ] || [ "$board" = "vim1s" ]; then
 			dtb_path=$dtb_path/amlogic
 			vendor=amlogic
 		fi
