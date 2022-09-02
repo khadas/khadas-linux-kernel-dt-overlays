@@ -1,0 +1,9 @@
+Package: khadas-edge2-linux-5.10-dt-overlays
+Version: 1.2~20220902
+Architecture: arm64
+Maintainer: Khadas <hello@khadas.com>
+Installed-Size: 130
+Section: kernel
+Priority: optional
+Homepage: http://www.kernel.org/
+Description: Linux DTB overlays.

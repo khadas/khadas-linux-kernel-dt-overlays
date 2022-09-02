@@ -58,14 +58,20 @@ if [ "$1" = "debian" ]; then
 		if [ "$board" = "vim4" ] || [ "$board" = "vim1s" ]; then
 			dtb_path=$dtb_path/amlogic
 			vendor=amlogic
+			overlay_path=$dtb_path/k${board}.dtb.overlays
+			overlay_env=k${board}.dtb.overlay.env
+		elif [ "$board" = "edge2" ]; then
+			dtb_path=$dtb_path/rockchip
+			vendor=rockchip
+			overlay_path=$dtb_path/rk3588s-khadas-edge2.dtb.overlays
+			overlay_env=rk3588s-khadas-edge2.dtb.overlay.env
 		fi
-		overlay_path=$dtb_path/k${board}.dtb.overlays
 		mkdir -p $overlay_path
 		cp $BIN/$board/$linux/*.dtbo $overlay_path
 		cat <<-EOF > $debian_package_path/$debian_package/DEBIAN/postinst
 		#!/bin/bash
 
-		[ ! -f /boot/dtb/$vendor/k${board}.dtb.overlay.env ] && echo "fdt_overlays=" > /boot/dtb/$vendor/k${board}.dtb.overlay.env
+		[ ! -f /boot/dtb/$vendor/$overlay_env ] && echo "fdt_overlays=" > /boot/dtb/$vendor/$overlay_env
 
 		exit 0
 		EOF
