@@ -54,24 +54,37 @@ if [ "$1" = "debian" ]; then
 		rm -rf $debian_package_path/$debian_package
 		mkdir -p $debian_package_path/$debian_package/DEBIAN
 		cp -r $control $debian_package_path/$debian_package/DEBIAN/control
-		dtb_path=$debian_package_path/$debian_package/boot/dtb
 		if [ "$board" = "vim4" ] || [ "$board" = "vim1s" ]; then
-			dtb_path=$dtb_path/amlogic
 			vendor=amlogic
-			overlay_path=$dtb_path/k${board}.dtb.overlays
+			overlay_dir=k${board}.dtb.overlays
 			overlay_env=k${board}.dtb.overlay.env
 		elif [ "$board" = "edge2" ]; then
-			dtb_path=$dtb_path/rockchip
 			vendor=rockchip
-			overlay_path=$dtb_path/rk3588s-khadas-edge2.dtb.overlays
+			overlay_dir=rk3588s-khadas-edge2.dtb.overlays
 			overlay_env=rk3588s-khadas-edge2.dtb.overlay.env
 		fi
+		overlay_path=$debian_package_path/$debian_package/boot/overlays/${overlay_dir}
 		mkdir -p $overlay_path
 		cp $BIN/$board/$linux/*.dtbo $overlay_path
+
+		cat <<-EOF > $debian_package_path/$debian_package/DEBIAN/preinst
+		#!/bin/bash
+
+		[ ! -L /boot/dtb/${vendor}/${overlay_env} ] && echo \`readlink /boot/dtb\` > /boot/.dtb.tmp && rm /boot/dtb/${vendor}/${overlay_env}
+
+		exit 0
+		EOF
+		chmod 755 $debian_package_path/$debian_package/DEBIAN/preinst
+
 		cat <<-EOF > $debian_package_path/$debian_package/DEBIAN/postinst
 		#!/bin/bash
 
-		[ ! -f /boot/dtb/$vendor/$overlay_env ] && echo "fdt_overlays=" > /boot/dtb/$vendor/$overlay_env
+		[ ! -f /boot/overlays/$overlay_env ] && echo "fdt_overlays=" > /boot/overlays/$overlay_env
+		[ -f /boot/.dtb.tmp ] && (cd /boot; [ ! -L dtb ] && ln -fs \`cat /boot/.dtb.tmp\` dtb) && rm /boot/.dtb.tmp
+		cd /boot/dtb/$vendor
+		[ ! -L /boot/dtb/${vendor}/${overlay_dir} ] && ln -fs ../../overlays/${overlay_dir} ${overlay_dir}
+		[ ! -L /boot/dtb/${vendor}/${overlay_env} ] && ln -fs ../../overlays/$overlay_env ${overlay_env}
+		cd - > /dev/null
 
 		exit 0
 		EOF
