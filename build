@@ -25,6 +25,8 @@ OVL=overlays
 BIN=$D/bin
 mkdir -p $BIN
 
+rm -rf $BIN/*
+
 if [ "$1" = "clean" ]; then
 	rm -rf $BIN *.deb
 	exit
