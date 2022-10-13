@@ -1,5 +1,5 @@
 Package: khadas-vim4-linux-5.4-dt-overlays
-Version: 1.2~20221011
+Version: 1.2~GITREV
 Architecture: arm64
 Maintainer: Khadas <hello@khadas.com>
 Installed-Size: 130

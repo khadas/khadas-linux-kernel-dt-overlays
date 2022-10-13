@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ## hyphop ##
 
@@ -48,12 +48,14 @@ if [ "$1" = "debian" ]; then
 	do
 		debian_package=`cat $control | grep "Package: " | awk '{print $2}'`
 		ver=`cat $control | grep "Version: " | awk '{print $2}'`
+		ver=${ver/GITREV/`git describe --abbrev=7 --dirty --always`}
 		debian_package=${debian_package}_${ver}_arm64
 		board=`echo $debian_package | awk -F "-" '{print $2}'`
 		linux=`echo $debian_package | awk -F "-" '{print $4}'`
 		rm -rf $debian_package_path/$debian_package
 		mkdir -p $debian_package_path/$debian_package/DEBIAN
 		cp -r $control $debian_package_path/$debian_package/DEBIAN/control
+		sed -i s/GITREV/`git describe --abbrev=7 --dirty --always`/g $debian_package_path/$debian_package/DEBIAN/control
 		if [ "$board" = "vim4" ] || [ "$board" = "vim1s" ]; then
 			vendor=amlogic
 			overlay_dir=k${board}.dtb.overlays
