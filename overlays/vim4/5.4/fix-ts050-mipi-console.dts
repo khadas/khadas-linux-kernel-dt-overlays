@@ -1,0 +1,12 @@
+/dts-v1/;
+/plugin/;
+
+/ {
+	fragment@0 {
+		target = <&drm_subsystem>;
+
+		__overlay__ {
+			fbdev_sizes = <1080 1920 1080 3840 32>;
+		};
+	};
+};
