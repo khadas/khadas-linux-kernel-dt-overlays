@@ -105,7 +105,7 @@ if [ "$1" = "debian" ]; then
 		EOF
 		chmod 755 $debian_package_path/$debian_package/DEBIAN/postinst
 
-		fakeroot dpkg -b $debian_package_path/$debian_package
+		fakeroot dpkg-deb --build -Zxz $debian_package_path/$debian_package $debian_package_path
 		mv $debian_package_path/${debian_package}.deb .
 		rm -rf $debian_package_path/${debian_package}
 	done
