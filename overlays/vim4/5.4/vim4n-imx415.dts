@@ -1,0 +1,23 @@
+/dts-v1/;
+/plugin/;
+
+/ {
+	fragment@0 {
+		target = <&csiphy0>;
+
+		__overlay__ {
+			ports {
+				port@0 {
+					csiphy0_ep_2: endpoint {
+						status = "disabled";
+					};
+				};
+				port@1 {
+					csiphy0_ep_4: endpoint {
+							status = "okay";
+					};
+				};
+			};
+		};
+	};
+};
