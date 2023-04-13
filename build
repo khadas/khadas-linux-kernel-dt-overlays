@@ -65,8 +65,8 @@ if [ "$1" = "debian" ]; then
 			overlay_dir=k${board}.dtb.overlays
 			overlay_env=k${board}.dtb.overlay.env
 			if [ "$board" = "vim4" ]; then
-				overlay_dir_s=k${board}s.dtb.overlays
-				overlay_env_s=k${board}s.dtb.overlay.env
+				overlay_dir_n=k${board}n.dtb.overlays
+				overlay_env_n=k${board}n.dtb.overlay.env
 			fi
 		elif [ "$board" = "edge2" ]; then
 			vendor=rockchip
@@ -95,11 +95,9 @@ if [ "$1" = "debian" ]; then
 		[ ! -L /boot/dtb/${vendor}/${overlay_dir} ] && ln -fs ../../overlays/${overlay_dir} ${overlay_dir}
 		[ ! -L /boot/dtb/${vendor}/${overlay_env} ] && ln -fs ../../overlays/$overlay_env ${overlay_env}
 		if [ "$board" = "vim4" ]; then
-			[ ! -L /boot/dtb/${vendor}/${overlay_dir_s} ] && ln -fs ../../overlays/${overlay_dir} ${overlay_dir_s}
-			[ ! -L /boot/dtb/${vendor}/${overlay_env_s} ] && ln -fs ../../overlays/$overlay_env ${overlay_env_s}
+			[ ! -L /boot/dtb/${vendor}/${overlay_dir_n} ] && ln -fs ../../overlays/${overlay_dir} ${overlay_dir_n}
+			[ ! -L /boot/dtb/${vendor}/${overlay_env_n} ] && ln -fs ../../overlays/$overlay_env ${overlay_env_n}
 
-			[ -L /boot/dtb/${vendor}/k${board}n.dtb.overlays ] && rm /boot/dtb/${vendor}/k${board}n.dtb.overlays
-			[ -L /boot/dtb/${vendor}/k${board}n.dtb.overlay.env ] && rm /boot/dtb/${vendor}/k${board}n.dtb.overlay.env
 		fi
 		cd - > /dev/null
 
