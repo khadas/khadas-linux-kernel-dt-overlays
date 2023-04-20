@@ -1,0 +1,22 @@
+/dts-v1/;
+/plugin/;
+
+/ {
+	fragment@0 {
+		target = <&i2c0>;
+
+		__overlay__ {
+			status = "okay";
+			i2c-scl-rising-time-ns = <600>;
+			i2c-scl-falling-time-ns = <20>;
+		};
+	};
+
+	fragment@1 {
+		target = <&spi3>;
+
+		__overlay__ {
+			status = "disabled";
+		};
+	};
+};
