@@ -1,0 +1,13 @@
+/dts-v1/;
+/plugin/;
+
+/ {
+	fragment@0 {
+		target = <&aml_tdmb>;
+
+		__overlay__ {
+			pinctrl-names = "tdm_pins";
+			pinctrl-0 = <&tdmb_mclk &tdmout_b &tdm_b_clk_pins>;
+		};
+	};
+};
