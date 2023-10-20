@@ -2,10 +2,10 @@
 /plugin/;
 
 / {
-    fragment@0 {
-        target = <&aml_sound>;
+	fragment@0 {
+		target = <&aml_sound>;
 
-        __overlay__ {
+		__overlay__ {
 			aml-audio-card,dai-link@0 {
 				format = "i2s";
 				mclk-fs = <256>;
@@ -34,20 +34,6 @@
 			};
 
 			aml-audio-card,dai-link@1 {
-				mclk-fs = <128>;
-				continuous-clock;
-				/* suffix-name, sync with android audio hal used for */
-				suffix-name = "alsaPORT-spdif";
-				cpu {
-					sound-dai = <&spdifa>;
-					system-clock-frequency = <6144000>;
-				};
-				codec {
-					sound-dai = <&dummy_codec>;
-				};
-			};
-
-			aml-audio-card,dai-link@2 {
 				format = "dsp_a";
 				mclk-fs = <64>;
 				continuous-clock;
@@ -64,11 +50,11 @@
 				/* suffix-name, sync with android audio hal used for */
 				suffix-name = "alsaPORT-pcm";
 				tdmacpu: cpu {
-				 	sound-dai = <&tdma>;
+					sound-dai = <&tdma>;
 					dai-tdm-slot-tx-mask =
-						<1>;
+								<1>;
 					dai-tdm-slot-rx-mask =
-						<1>;
+								<1>;
 					dai-tdm-slot-num = <2>;
 					dai-tdm-slot-width = <16>;
 					system-clock-frequency = <512000>;
@@ -78,7 +64,7 @@
 				};
 			};
 
-			aml-audio-card,dai-link@3 {
+			aml-audio-card,dai-link@2 {
 				format = "i2s";
 				mclk-fs = <256>;
 				//continuous-clock;
@@ -101,14 +87,14 @@
 					system-clock-frequency = <12288000>;
 				};
 				tdmccodec: codec {
-				   	sound-dai = <&dummy_codec>;
+					sound-dai = <&dummy_codec>;
 				};
 			};
 
-			aml-audio-card,dai-link@4 {
+			aml-audio-card,dai-link@3 {
 				mclk-fs = <64>;
 				/* suffix-name, sync with android audio hal used for */
-				suffix-name = "alsaPORT-pdm";
+				suffix-name = "alsaPORT-pdm-builtinmic";
 				cpu {
 					sound-dai = <&pdm>;
 				};
@@ -116,6 +102,21 @@
 					sound-dai = <&dummy_codec>;
 				};
 			};
+
+			aml-audio-card,dai-link@4 {
+				mclk-fs = <128>;
+				continuous-clock;
+				/* suffix-name, sync with android audio hal used for */
+				suffix-name = "alsaPORT-spdif";
+				cpu {
+					sound-dai = <&spdifa>;
+					system-clock-frequency = <6144000>;
+				};
+				codec {
+					sound-dai = <&dummy_codec>;
+				};
+			};
+
 			aml-audio-card,dai-link@5 {
 				mclk-fs = <128>;
 				suffix-name = "alsaPORT-spdifb";
@@ -168,4 +169,3 @@
 		};
 	};
 };
-
