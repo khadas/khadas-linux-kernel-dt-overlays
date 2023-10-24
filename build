@@ -60,7 +60,7 @@ if [ "$1" = "debian" ]; then
 		cp -r $control $debian_package_path/$debian_package/DEBIAN/control
 		sed -i s/GITREV/`git describe --abbrev=7 --dirty --always`/g $debian_package_path/$debian_package/DEBIAN/control
 		sed -i s/VERSION/`cat $D/VERSION`/g $debian_package_path/$debian_package/DEBIAN/control
-		if [ "$board" = "vim4" ] || [ "$board" = "vim1s" ]; then
+		if [ "$board" = "vim4" ] || [ "$board" = "vim1s" ] || [ "$board" = "vim3" ] || [ "$board" = "vim3l" ]; then
 			vendor=amlogic
 			overlay_dir=k${board}.dtb.overlays
 			overlay_env=k${board}.dtb.overlay.env
