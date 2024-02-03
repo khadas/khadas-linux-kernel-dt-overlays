@@ -22,7 +22,7 @@
 	};
 
 	fragment@1 {
-		target = <&imx415>;
+		target = <&amlsens_1>;
 
 		__overlay__ {
 			status = "okay";
@@ -30,7 +30,7 @@
 	};
 
 	fragment@2 {
-		target = <&ov08a10>;
+		target = <&amlsens_0>;
 
 		__overlay__ {
 			status = "disabled";
