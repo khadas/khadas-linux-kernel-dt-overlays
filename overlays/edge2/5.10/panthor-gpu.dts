@@ -6,14 +6,14 @@
 		target = <&gpu>;
 
 		__overlay__ {
-			status = "okay";
+			status = "disabled";
 		};
 	};
 	fragment@1 {
 		target = <&gpu_panthor>;
 
 		__overlay__ {
-			status = "disabled";
+			status = "okay";
 		};
 	};
 };
