@@ -1,0 +1,36 @@
+/dts-v1/;
+/plugin/;
+
+/ {
+	fragment@0 {
+		target = <&imx415b_out0>;
+
+		__overlay__ {
+			data-lanes = <1 2 3 4>;
+		};
+	};
+
+	fragment@1 {
+		target = <&os08a10b_out0>;
+
+		__overlay__ {
+			data-lanes = <1 2 3 4>;
+		};
+	};
+
+	fragment@2 {
+		target = <&mipi_in_dcphy0>;
+
+		__overlay__ {
+			data-lanes = <1 2 3 4>;
+		};
+	};
+
+	fragment@3 {
+		target = <&mipi_in_dcphy2>;
+
+		__overlay__ {
+			data-lanes = <1 2 3 4>;
+		};
+	};
+};
