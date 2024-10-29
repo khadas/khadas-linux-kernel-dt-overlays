@@ -1,0 +1,60 @@
+/dts-v1/;
+/plugin/;
+
+/{
+	fragment@0 {
+		target = <&imx678>;
+		__overlay__ {
+			status = "disabled";
+		};
+	};
+
+	fragment@1 {
+		target = <&imx678b>;
+		__overlay__ {
+			status = "disabled";
+		};
+	};
+
+	fragment@2 {
+		target = <&imx678f>;
+		__overlay__ {
+			status = "disabled";
+		};
+	};
+
+	fragment@3 {
+		target = <&imx585>;
+		__overlay__ {
+			status = "okay";
+		};
+	};
+
+	fragment@4 {
+		target = <&imx585b>;
+		__overlay__ {
+			status = "okay";
+		};
+	};
+
+	fragment@5 {
+		target = <&imx585f>;
+		__overlay__ {
+			status = "okay";
+		};
+	};
+
+	fragment@6 {
+		target = <&imx585b_out0>;
+		__overlay__ {
+			data-lanes = <1 2 3 4>;
+		};
+	};
+
+	fragment@7 {
+		target = <&mipi_in_dcphy6>;
+		__overlay__ {
+			data-lanes = <1 2 3 4>;
+		};
+	};
+};
