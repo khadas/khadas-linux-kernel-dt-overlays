@@ -19,6 +19,20 @@
 	};
 
 	fragment@2 {
+		target = <&imx678b_out0>;
+		__overlay__ {
+			data-lanes = <1 2 3 4>;
+		};
+	};
+
+	fragment@3 {
+		target = <&imx585b_out0>;
+		__overlay__ {
+			data-lanes = <1 2 3 4>;
+		};
+	};
+
+	fragment@4 {
 		target = <&mipi_in_dcphy0>;
 
 		__overlay__ {
@@ -26,9 +40,23 @@
 		};
 	};
 
-	fragment@3 {
+	fragment@5 {
 		target = <&mipi_in_dcphy2>;
 
+		__overlay__ {
+			data-lanes = <1 2 3 4>;
+		};
+	};
+
+	fragment@6 {
+		target = <&mipi_in_dcphy4>;
+		__overlay__ {
+			data-lanes = <1 2 3 4>;
+		};
+	};
+
+	fragment@7 {
+		target = <&mipi_in_dcphy6>;
 		__overlay__ {
 			data-lanes = <1 2 3 4>;
 		};
