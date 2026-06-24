@@ -53,8 +53,8 @@ if [ "$1" = "debian" ]; then
 		ver=${ver/GITREV/`git describe --abbrev=7 --dirty --always`}
 		ver=${ver/VERSION/`cat $D/VERSION`}
 		debian_package=${debian_package}_${ver}_arm64
-		board=`echo $debian_package | awk -F "-" '{print $2}'`
-		linux=`echo $debian_package | awk -F "-" '{print $4}'`
+		board="${control##*control.}"
+		linux=`echo $debian_package | sed -E 's/.*linux-([0-9.]+)-dt.*/\1/'`
 		rm -rf $debian_package_path/$debian_package
 		mkdir -p $debian_package_path/$debian_package/DEBIAN
 		cp -r $control $debian_package_path/$debian_package/DEBIAN/control
@@ -68,10 +68,15 @@ if [ "$1" = "debian" ]; then
 				overlay_dir_n=k${board}n.dtb.overlays
 				overlay_env_n=k${board}n.dtb.overlay.env
 			fi
-		elif [ "$board" = "edge2" ]; then
+		elif [ "$board" = "edge2" ] || [ "$board" = "edge-2l" ]; then
 			vendor=rockchip
-			overlay_dir=rk3588s-khadas-edge2.dtb.overlays
-			overlay_env=rk3588s-khadas-edge2.dtb.overlay.env
+			if [ "$board" = "edge2" ]; then
+				overlay_dir=rk3588s-khadas-$board.dtb.overlays
+				overlay_env=rk3588s-khadas-$board.dtb.overlay.env
+			elif [ "$board" = "edge-2l" ]; then
+				overlay_dir=rk3576-khadas-$board.dtb.overlays
+				overlay_env=rk3576-khadas-$board.dtb.overlay.env
+			fi
 		fi
 		overlay_path=$debian_package_path/$debian_package/boot/overlays/${overlay_dir}
 		mkdir -p $overlay_path
